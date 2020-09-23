@@ -10,7 +10,7 @@ export class ColumnDirective implements OnChanges {
   constructor(private eRef: ElementRef) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
+    // console.log(changes);
     if (changes && changes.appColumn && changes.appColumn.currentValue) {
       const ele: HTMLElement = this.eRef.nativeElement;
       const colSize = 12 / this.appColumn;

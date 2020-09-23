@@ -5,7 +5,7 @@ import { CurrencyService } from 'src/app/services/currency.service';
   selector: 'app-currency',
   templateUrl: './currency.component.html',
   styleUrls: ['./currency.component.css'],
-  providers: [CurrencyService]
+  providers: []
 })
 export class CurrencyComponent implements OnInit {
 
@@ -28,7 +28,8 @@ export class CurrencyComponent implements OnInit {
 
   setCurrency(currency) {
     // sends data to parent (app) component
-    this.selected.emit(currency);
+    // this.selected.emit(currency);
+    this.currencyService.updateCurrency(currency);
   }
 
 }

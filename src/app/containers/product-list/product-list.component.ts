@@ -1,5 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { ProductModel } from 'src/app/models/product.model';
+import { CurrencyService } from 'src/app/services/currency.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -8,10 +10,12 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./product-list.component.css'],
   providers: [ProductService]
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit, OnDestroy {
 
   @Input() currentCurrency: string;
   cartItems: Array<string> = [];
+  currencyObservable$: Subscription;
+  currency$: Observable<string>;
 
   pList: ProductModel[] = [
     {
@@ -30,7 +34,9 @@ export class ProductListComponent implements OnInit {
     }
   ];
 
-  constructor(private productService: ProductService) { }
+  constructor(
+    private productService: ProductService,
+    private currencyService: CurrencyService) { }
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe(
@@ -41,7 +47,21 @@ export class ProductListComponent implements OnInit {
       (err) => {
         console.log(err);
       }
-    )
+    );
+    this.getCurrencyCode();
+  }
+
+  getCurrencyCode() {
+    this.currency$ = this.currencyService.currencyObservable;
+    this.currencyObservable$ = this.currencyService.currencyObservable.subscribe(
+      (res) => {
+        // console.log(res);
+        this.currentCurrency = res;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   updateCart(data) {
@@ -49,4 +69,7 @@ export class ProductListComponent implements OnInit {
     console.log(this.cartItems);
   }
 
+  ngOnDestroy(): void {
+    this.currencyObservable$.unsubscribe();
+  }
 }

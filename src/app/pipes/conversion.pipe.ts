@@ -1,9 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { CurrencyService } from '../services/currency.service';
 
 @Pipe({
   name: 'conversion'
 })
 export class ConversionPipe implements PipeTransform {
+
+  constructor(private currencyService: CurrencyService) {}
 
   transform(value: number, currencyCode: string = 'INR'): number {
     if (isNaN(value)) {
@@ -14,17 +17,10 @@ export class ConversionPipe implements PipeTransform {
   }
 
   convertPrice(price: number, code: string) {
-    switch (code) {
-      case 'USD':
-        return (price /= 70);
-      case 'EUR':
-        return (price /= 87);
-      case 'GBP':
-        return (price /= 78);
-      case 'CAD':
-        return (price /= 52);
-      default:
-        return price;
+    try {
+      return (price*this.currencyService.getExchangeRate(code))/this.currencyService.getExchangeRate('INR');
+    } catch {
+      return price;
     }
   }
 }

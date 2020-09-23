@@ -13,6 +13,7 @@ import { ImgFallbackDirective } from './directives/img-fallback.directive';
 import { NumbersOnlyDirective } from './directives/numbers-only.directive';
 import { RowDirective } from './directives/row.directive';
 import { ColumnDirective } from './directives/column.directive';
+import { CurrencyService } from './services/currency.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { ColumnDirective } from './directives/column.directive';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [CurrencyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

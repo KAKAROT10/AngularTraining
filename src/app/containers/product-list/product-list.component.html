@@ -1,7 +1,11 @@
 <div appRow>
     <div *ngFor="let product of pList" [appColumn]="4">
-        <app-product 
+        <!-- <app-product 
         [currencyCode]="currentCurrency"
+        [pData]="product"
+        (selectedProduct)="updateCart(product.productId)"></app-product> -->
+        <app-product 
+        [currencyCode]="currency$ | async"
         [pData]="product"
         (selectedProduct)="updateCart(product.productId)"></app-product>
     </div>
