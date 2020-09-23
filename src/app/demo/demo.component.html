@@ -1,0 +1,15 @@
+<h1>One way data binding</h1>
+<h2>String Interpolation</h2>
+
+<p>{{ demoData }}</p>
+<p>{{ 7 + 8 }}</p>
+<input type="text" value="{{ demoData }}" />
+<input type="text" [value]="demoData" />
+
+<h1>Event Binding</h1>
+
+<button (click)="showAlert()">Show Alert</button>
+
+<h1>Two way data binding</h1>
+
+<input type="text" [(ngModel)]="demoData" />

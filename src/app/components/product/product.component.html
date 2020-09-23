@@ -1,0 +1,10 @@
+<div>
+    <img [src]="pData.productImage" [appImgFallback]="imageFallback" class='img-thumbnail' />
+    <h3>{{ pData.productName | uppercase }}</h3>
+    <h4>{{ pData.productPrice | conversion: currencyCode | currency: currencyCode : "symbol" : "2.1-1" }}</h4>
+    <button (click)="addToCart()" *ngIf="pData.productStock; else noStock">Add to Cart</button>
+</div>
+<!-- #templateRef : template reference-->
+<ng-template #noStock>
+    <p>Out of Stock</p>
+</ng-template>
