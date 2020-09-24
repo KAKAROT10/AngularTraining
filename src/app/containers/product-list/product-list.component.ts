@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { ProductModel } from 'src/app/models/product.model';
 import { CurrencyService } from 'src/app/services/currency.service';
@@ -16,6 +17,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   cartItems: Array<string> = [];
   currencyObservable$: Subscription;
   currency$: Observable<string>;
+  storeCurrency$: Observable<string>;
 
   pList: ProductModel[] = [
     {
@@ -36,7 +38,9 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   constructor(
     private productService: ProductService,
-    private currencyService: CurrencyService) { }
+    private currencyService: CurrencyService,
+    private store: Store<{currency: string}>
+  ) { }
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe(
@@ -52,6 +56,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   getCurrencyCode() {
+    this.storeCurrency$ = this.store.select('currency');
     this.currency$ = this.currencyService.currencyObservable;
     this.currencyObservable$ = this.currencyService.currencyObservable.subscribe(
       (res) => {

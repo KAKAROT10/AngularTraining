@@ -14,6 +14,11 @@ import { NumbersOnlyDirective } from './directives/numbers-only.directive';
 import { RowDirective } from './directives/row.directive';
 import { ColumnDirective } from './directives/column.directive';
 import { CurrencyService } from './services/currency.service';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { currencyReducer } from './_store/reducers/currency.reducer';
+import { UserModule } from './user/user.module';
 
 @NgModule({
   declarations: [
@@ -31,7 +36,10 @@ import { CurrencyService } from './services/currency.service';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    UserModule,
+    StoreModule.forRoot({ currency: currencyReducer }, {}),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
   providers: [CurrencyService],
   bootstrap: [AppComponent]

@@ -5,7 +5,7 @@
         [pData]="product"
         (selectedProduct)="updateCart(product.productId)"></app-product> -->
         <app-product 
-        [currencyCode]="currency$ | async"
+        [currencyCode]="storeCurrency$ | async"
         [pData]="product"
         (selectedProduct)="updateCart(product.productId)"></app-product>
     </div>
